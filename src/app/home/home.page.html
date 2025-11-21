@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Terremotos Recientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="content-container">
+    <!-- Imagen de la Tierra -->
+    <div class="image-container">
+      <img 
+        src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&h=600&fit=crop" 
+        alt="Planeta Tierra" 
+        class="earth-image"
+      />
+    </div>
+
+    <!-- Botón para cargar terremoto -->
+    <ion-button 
+      expand="block" 
+      (click)="loadEarthquake()"
+      [disabled]="loading"
+      class="load-button">
+      <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+      <span *ngIf="!loading">Cargar Último Terremoto</span>
+    </ion-button>
+
+    <!-- Error -->
+    <ion-card *ngIf="error" color="danger">
+      <ion-card-content>{{ error }}</ion-card-content>
+    </ion-card>
+
+    <!-- Información del terremoto -->
+    <ion-card *ngIf="latestEarthquake && !loading">
+      <ion-card-header>
+        <ion-card-title>{{ latestEarthquake.properties.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Magnitud:</strong> {{ latestEarthquake.properties.mag }}</p>
+        <p><strong>Lugar:</strong> {{ latestEarthquake.properties.place }}</p>
+        <p><strong>Fecha:</strong> {{ latestEarthquake.properties.time | date:'medium' }}</p>
+        <p><strong>Coordenadas:</strong> {{ latestEarthquake.geometry.coordinates[1] }}, {{ latestEarthquake.geometry.coordinates[0] }}</p>
+        <p><strong>Profundidad:</strong> {{ latestEarthquake.geometry.coordinates[2] }} km</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Navegación a segunda página -->
+    <ion-button 
+      expand="block" 
+      color="secondary" 
+      [routerLink]="['/api-spring']"
+      class="nav-button">
+      Ir a API Spring Boot
+    </ion-button>
+  </div>
+</ion-content>

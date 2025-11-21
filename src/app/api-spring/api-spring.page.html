@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi API Spring Boot</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="content-container">
+    <!-- Imagen a tu elección -->
+    <div class="image-container">
+      <img 
+        src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop" 
+        alt="Programación" 
+        class="custom-image"
+      />
+    </div>
+
+    <!-- Botón para cargar datos -->
+    <ion-button 
+      expand="block" 
+      (click)="loadData()"
+      [disabled]="loading"
+      color="secondary"
+      class="load-button">
+      <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+      <span *ngIf="!loading">Cargar Datos de Spring Boot</span>
+    </ion-button>
+
+    <!-- Error -->
+    <ion-card *ngIf="error" color="danger">
+      <ion-card-content>{{ error }}</ion-card-content>
+    </ion-card>
+
+    <!-- Datos de la API -->
+    <ion-card *ngFor="let item of data">
+      <ion-card-header>
+        <ion-card-title>{{ item.nombre }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>ID:</strong> {{ item.id }}</p>
+        <p><strong>Categoría:</strong> {{ item.categoria }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Navegación de regreso -->
+    <ion-button 
+      expand="block" 
+      color="primary" 
+      [routerLink]="['/home']"
+      class="nav-button">
+      Volver a Terremotos
+    </ion-button>
+  </div>
+</ion-content>
